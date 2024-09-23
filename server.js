@@ -76,6 +76,7 @@ app.get('/logout', (req, res) => {
 
 // 原来的路由
 app.use('/', require('./routes/index'));
+app.use('/cakes', require('./routes/cakes')); // 配置蛋糕相关的路由
 
 // 路由
 //app.get('/', (req, res) => {
