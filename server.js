@@ -17,9 +17,6 @@ app.set('layout', 'layout'); // 设置默认布局为 layout.ejs
 // 设置 Express 使用静态文件夹
 app.use(express.static('public'));
 
-
-
-
 // 连接到 MongoDB 数据库
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
