@@ -29,6 +29,14 @@ const CakeSchema = new mongoose.Schema({
       },
     },
   ],
+  type: {
+    type: String,
+    enum: [
+      'Hot', 'Fruit', 'Horoscope', 'Women', 'Men', 'Baby', 'Love', 'Drawing',
+      'Funny', 'Congratulations', 'Simple', 'Elder', 'Beanpaste', 'Double'
+    ], // 定义所有可能的类型
+    default: 'Simple', // 默认为 Simple
+  },
 });
 
 // 创建 Cake 模型

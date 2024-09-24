@@ -11,24 +11,29 @@ const storage = multer.diskStorage({
     cb(null, 'public/uploads'); // 设置图片保存路径
   },
   filename: function (req, file, cb) {
-    // 使用当前时间戳 + 原文件名作为新文件名，避免重复
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + path.extname(file.originalname)); // 使用时间戳和原始扩展名作为文件名
   },
 });
 
 const upload = multer({ storage: storage });
 
-// 添加一个新的蛋糕，支持图片上传
+// 显示添加蛋糕的表单页面
+router.get('/addcake', (req, res) => {
+  res.render('addcake'); // 渲染 addcake.ejs 表单页面
+});
+
+// 处理表单提交，添加新的蛋糕
 router.post('/add', upload.single('photo'), async (req, res) => {
-  const { name, description, sizes } = req.body;
-  const photoPath = req.file ? `/uploads/${req.file.filename}` : ''; // 获取上传的图片路径
+  const { name, description, sizes, type } = req.body;
+  const photoPath = req.file ? `/uploads/${req.file.filename}` : '';
 
   try {
     const newCake = new Cake({
       name,
       description,
-      photo: photoPath, // 存储图片路径
+      photo: photoPath,
       sizes: JSON.parse(sizes), // 将尺寸和价格从 JSON 字符串解析为对象
+      type, // 存储蛋糕的类型
     });
 
     await newCake.save();
@@ -45,19 +50,6 @@ router.get('/', async (req, res) => {
     res.json(cakes);
   } catch (error) {
     res.status(500).send('Error fetching cakes: ' + error.message);
-  }
-});
-
-// 根据 ID 获取单个蛋糕
-router.get('/:id', async (req, res) => {
-  try {
-    const cake = await Cake.findById(req.params.id);
-    if (!cake) {
-      return res.status(404).send('Cake not found');
-    }
-    res.json(cake);
-  } catch (error) {
-    res.status(500).send('Error fetching cake: ' + error.message);
   }
 });
 

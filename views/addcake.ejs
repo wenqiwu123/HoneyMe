@@ -1,0 +1,48 @@
+<!-- views/addcake.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Cake</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- 如果有样式文件，可以引用 -->
+</head>
+<body>
+    <h1>Add a New Cake</h1>
+    <form action="/cakes/add" method="POST" enctype="multipart/form-data">
+        <label for="name">Cake Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="photo">Upload Photo:</label>
+        <input type="file" id="photo" name="photo" accept="image/*" required>
+
+        <label for="sizes">Sizes and Prices (JSON format):</label>
+        <input type="text" id="sizes" name="sizes" placeholder='[{"size": "6寸", "price": 20.99}, {"size": "8寸", "price": 30.99}]' required>
+
+        <!-- 添加蛋糕类型的选择 -->
+        <label for="type">Cake Type:</label>
+        <select id="type" name="type" required>
+            <option value="Hot">Hot</option>
+            <option value="Fruit">Fruit</option>
+            <option value="Horoscope">Horoscope</option>
+            <option value="Women">Women</option>
+            <option value="Men">Men</option>
+            <option value="Baby">Baby</option>
+            <option value="Love">Love</option>
+            <option value="Drawing">Drawing</option>
+            <option value="Funny">Funny</option>
+            <option value="Congratulations">Congratulations</option>
+            <option value="Simple">Simple</option>
+            <option value="Elder">Elder</option>
+            <option value="Beanpaste">Beanpaste</option>
+            <option value="Double">Double</option>
+        </select>
+
+        <button type="submit">Add Cake</button>
+    </form>
+</body>
+</html>
