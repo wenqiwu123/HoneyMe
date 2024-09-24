@@ -1,0 +1,71 @@
+<!-- views/allcakes.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Cakes</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧导航栏 -->
+        <aside class="sidebar">
+            <ul>
+                <% const types = ['Hot', 'Fruit', 'Horoscope', 'Women', 'Men', 'Baby', 'Love', 'Drawing', 'Funny', 'Congratulations', 'Simple', 'Elder', 'Beanpaste', 'Double']; %>
+                <% types.forEach(t => { %>
+                    <li>
+                        <a href="/cakes/all?type=<%= t %>" class="nav-link <%= type === t ? 'active' : '' %>">
+                            <%= t %>
+                        </a>
+                    </li>
+                <% }) %>
+            </ul>
+        </aside>
+
+        <!-- 右侧蛋糕展示区域 -->
+        <main class="main-content">
+            <section class="cake-grid">
+                <% cakes.forEach(cake => { %>
+                    <div class="cake-item">
+                        <img src="<%= cake.photo %>" alt="<%= cake.name %>" class="cake-image">
+                        <h3><%= cake.name %></h3>
+                        <p>Available Sizes:</p>
+                        <ul>
+                            <% cake.sizes.forEach(size => { %>
+                                <li><%= size.size %> - $<%= size.price.toFixed(2) %></li>
+                            <% }) %>
+                        </ul>
+                        <button class="add-to-cart">Add to cart</button>
+                    </div>
+                <% }) %>
+            </section>
+
+            <!-- 分页导航，确保它位于蛋糕展示区域的下方 -->
+            <div class="pagination">
+                <% if (currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>&type=<%= type %>" class="pagination-link">Previous</a>
+                <% } %>
+
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <a href="?page=<%= i %>&type=<%= type %>" class="pagination-link <%= currentPage === i ? 'active' : '' %>">
+                        <%= i %>
+                    </a>
+                <% } %>
+
+                <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>&type=<%= type %>" class="pagination-link">Next</a>
+                <% } %>
+            </div>
+        </main>
+
+        <!-- 大图查看容器 -->
+        <div class="image-viewer" id="image-viewer">
+            <img src="" id="large-image" class="large-image" alt="Cake Image">
+        </div>
+    </div>
+
+    <script src="/scripts.js"></script> <!-- 引入 JavaScript 文件 -->
+</body>
+</html>
